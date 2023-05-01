@@ -11,7 +11,7 @@
     </v-col>
     <v-list flat subheader>
       <v-list-item-group multiple active-class="">
-        <div v-for="(tarefa, index) in tarefas" :key="index">
+        <div v-for="(tarefa, index) in $store.state.tarefas" :key="index">
           <Tarefa :tarefa="tarefa" @tarefaConcluida="tarefa.concluido = $event" />
         </div>
       </v-list-item-group>
@@ -33,11 +33,8 @@ export default {
   },
   methods: {
     adicionarTarefa() {
-      if (this.inputTarefa) {
-        const tarefa = { titulo: this.inputTarefa, concluido: false }
-        this.tarefas.push(tarefa)
-        this.inputTarefa = null
-      }
+      this.$store.commit('adicionarTarefa', this.inputTarefa)
+      this.inputTarefa = null
     }
   }
 };
