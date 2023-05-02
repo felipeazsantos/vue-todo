@@ -11,8 +11,8 @@
     </v-col>
     <v-list flat subheader>
       <v-list-item-group multiple active-class="">
-        <div v-for="(tarefa, index) in $store.state.tarefas" :key="index">
-          <Tarefa :tarefa="tarefa" @tarefaConcluida="tarefa.concluido = $event" />
+        <div v-for="(tarefa, index) in tarefas" :key="index">
+          <Tarefa :tarefa="tarefa" />
         </div>
       </v-list-item-group>
     </v-list>
@@ -21,6 +21,7 @@
 
 <script>
 import Tarefa from "@/components/Tarefas/Tarefa.vue";
+import { mapState } from 'vuex'
 
 export default {
   name: "Home",
@@ -28,8 +29,10 @@ export default {
   data() {
     return {
       inputTarefa: null,
-      tarefas: [],
     };
+  },
+  computed: {
+    ...mapState(['tarefas'])
   },
   methods: {
     adicionarTarefa() {
