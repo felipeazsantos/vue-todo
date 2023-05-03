@@ -19,7 +19,7 @@
         </v-list-item-content>
 
         <v-list-item-action>
-          <TarefaMenu />
+          <TarefaMenu :tarefa="tarefa" />
           <!-- <v-btn 
             icon
             @click.stop="removeTarefa(tarefa.id)">
