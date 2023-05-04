@@ -3,16 +3,29 @@
     <v-navigation-drawer 
     v-model="drawer"
     app>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="text-h6">
-            Vue.js
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            Lista de tarefas
-          </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+      <v-img
+        src="./assets/bg-todo.jpg"
+        gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
+        dark
+        class="pt-5 text-center">
+         <v-avatar
+          size="100">
+            <img
+              src="https://docs.google.com/uc?id=1avCyAXYHGVYzBWk4XV9RY3eMrZuSX8Em"
+              alt="John"
+            >
+        </v-avatar>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="text-h6">
+              Vue.js
+            </v-list-item-title>
+            <v-list-item-subtitle>
+              Lista de tarefas
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-img>
 
       <v-divider></v-divider>
 
@@ -53,21 +66,13 @@
 
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-app-bar-title>Title</v-app-bar-title>
+      <center>
+        <v-app-bar-title class="mt-10">
+          <InputTarefa />
+        </v-app-bar-title>
+      </center>
 
       <v-spacer></v-spacer>
-
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
     </v-app-bar>
 
     <v-main>
@@ -77,9 +82,13 @@
 </template>
 
 <script>
+import InputTarefa from './components/InputTarefa.vue'
   export default {
+    components: {
+      InputTarefa
+    },
     data: () => ({ 
-      drawer: null,
+      drawer: false,
       items: [
           { title: 'Tarefas', icon: 'mdi-view-dashboard', to: '/' },
           { title: 'Sobre', icon: 'mdi-help-box', to: '/sobre' },
