@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Localbase from 'localbase'
+
+let db = new Localbase('db')
 
 Vue.use(Vuex)
 
@@ -10,27 +13,40 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    adicionarTarefa(state, titulo) {
-      if (titulo) {
-        const tarefa = {
-          id : new Date().getDate(), 
-          titulo, 
-          concluido: false }
-        state.tarefas.push(tarefa)
-      }
+    buscaTarefas(state) {
+      db.collection('tarefas').get().then(tarefas => {
+        state.tarefas = tarefas
+      })
+    },
+    adicionaTarefa(state, titulo) {
+      db.collection('tarefas').add({
+        id: new Date().getTime(),
+        titulo, 
+        concluido: false }
+      ) 
     },
     mudarStatusTarefa(state, tarefa) {
       tarefa.concluido = !tarefa.concluido
     },
-    removeTarefa(state, id) {
-      state.tarefas = state.tarefas.filter(tarefa => tarefa.id !== id);
-    },
-    editaTarefa(state, novaTarefa) {
-      const tarefa = state.tarefas.find(t => t.id === novaTarefa.id)
-      tarefa.titulo = novaTarefa.titulo
-    }
   },
   actions: {
+    async adicionaTarefa({commit}, titulo) {
+      await commit('adicionaTarefa', titulo);
+      await commit('buscaTarefas');
+    },
+    editaTarefa({ commit }, novaTarefa) {
+      db.collection('tarefas').doc({ id: novaTarefa.id }).update({
+        titulo: novaTarefa.titulo
+      }).then(() => {
+        commit('buscaTarefas');
+      })
+    },
+    removeTarefa({ commit }, id) {
+      db.collection('tarefas').doc({ id }).delete()
+        .then(() => {
+          commit('buscaTarefas');
+        })
+    }
   },
   modules: {
   }

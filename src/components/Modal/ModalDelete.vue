@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     removeTarefa() {
-      this.$store.commit('removeTarefa', this.tarefa.id)
+      this.$store.dispatch('removeTarefa', this.tarefa.id)
       this.dialog = false;
     }
   }

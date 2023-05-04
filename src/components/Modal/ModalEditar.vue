@@ -44,7 +44,7 @@ export default {
   methods: {
     editaTarefa() {
       const novaTarefa = { id: this.tarefa.id, titulo: this.titulo }
-      this.$store.commit('editaTarefa', novaTarefa)
+      this.$store.dispatch('editaTarefa', novaTarefa)
       this.dialog = false;
     }
   }

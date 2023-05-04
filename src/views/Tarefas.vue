@@ -9,23 +9,19 @@
         @keydown.enter="adicionarTarefa"
       ></v-text-field>
     </v-col>
-    <v-list flat subheader>
-      <v-list-item-group multiple active-class="">
-        <div v-for="(tarefa, index) in tarefas" :key="index">
-          <Tarefa :tarefa="tarefa" />
-        </div>
-      </v-list-item-group>
-    </v-list>
+
+    <ListaDeTarefas />
   </div>
 </template>
 
 <script>
-import Tarefa from "@/components/Tarefas/Tarefa.vue";
+// import Tarefa from "@/components/Tarefas/Tarefa.vue";
 import { mapState } from 'vuex'
+import ListaDeTarefas from '../components/Tarefas/ListaDeTarefas.vue'
 
 export default {
   name: "Home",
-  components: { Tarefa },
+  components: { ListaDeTarefas },
   data() {
     return {
       inputTarefa: null,
@@ -34,9 +30,13 @@ export default {
   computed: {
     ...mapState(['tarefas'])
   },
+  created() {
+    this.$store.commit('buscaTarefas');
+  },
   methods: {
     adicionarTarefa() {
-      this.$store.commit('adicionarTarefa', this.inputTarefa)
+      // this.$store.commit('adicionaTarefa', this.inputTarefa)
+      this.$store.dispatch('adicionaTarefa', this.inputTarefa);
       this.inputTarefa = null
     }
   }
